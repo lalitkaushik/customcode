@@ -1,4 +1,5 @@
 <?php
+
 namespace Dotsquares\Mystripe\Model;
 
 class Payment extends \Magento\Payment\Model\Method\Cc
@@ -32,8 +33,9 @@ class Payment extends \Magento\Payment\Model\Method\Cc
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Payment\Model\Method\Logger $logger,
         \Magento\Framework\Module\ModuleListInterface $moduleList,
-		\Magento\Framework\Stdlib\DateTime\TimezoneInterface $localeDate,
+        \Magento\Framework\Stdlib\DateTime\TimezoneInterface $localeDate,
         \Magento\Directory\Model\CountryFactory $countryFactory,
+        //\Dotsquares\Dotsquares $stripe,
         array $data = array()
     ) {
         parent::__construct(
@@ -53,7 +55,10 @@ class Payment extends \Magento\Payment\Model\Method\Cc
 
         $this->_countryFactory = $countryFactory;
 
-       
+        /* $this->_stripeApi = $stripe;
+        $this->_stripeApi->setApiKey(
+            $this->getConfigData('api_key')
+        ); */
 
         $this->_minAmount = $this->getConfigData('min_order_total');
         $this->_maxAmount = $this->getConfigData('max_order_total');
@@ -69,7 +74,7 @@ class Payment extends \Magento\Payment\Model\Method\Cc
      */
     public function capture(\Magento\Payment\Model\InfoInterface $payment, $amount)
     {
-         $this->_logger->error(__('Helloooooo..... '));
+        $this->_logger->error(__('Hellooooooooooooooooooo'));
 
         return $this;
     }
@@ -87,7 +92,7 @@ class Payment extends \Magento\Payment\Model\Method\Cc
         $transactionId = $payment->getParentTransactionId();
 
         try {
-            \Mystripe\Charge::retrieve($transactionId)->refund(['amount' => $amount * 100]);
+            \Stripe\Charge::retrieve($transactionId)->refund(['amount' => $amount * 100]);
         } catch (\Exception $e) {
             $this->debugData(['transaction_id' => $transactionId, 'exception' => $e->getMessage()]);
             $this->_logger->error(__('Payment refunding error.'));
@@ -111,16 +116,16 @@ class Payment extends \Magento\Payment\Model\Method\Cc
      */
     public function isAvailable(\Magento\Quote\Api\Data\CartInterface $quote = null)
     {
-       if ($quote && (
+        if ($quote && (
             $quote->getBaseGrandTotal() < $this->_minAmount
             || ($this->_maxAmount && $quote->getBaseGrandTotal() > $this->_maxAmount))
         ) {
             return false;
         }
 
-         /* if (!$this->getConfigData('api_key')) {
+        if (!$this->getConfigData('api_key')) {
             return false;
-        } */
+        }
 
         return parent::isAvailable($quote);
     }
