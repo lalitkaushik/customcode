@@ -3,7 +3,7 @@
     <system>
         <section id="payment">
             <group id="dotsquares_mystripe" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>Stripe</label>
+                <label>Mystripe</label>
                 <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -21,7 +21,7 @@
                 </field>
                 <field id="cctypes" translate="label" type="multiselect" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Credit Card Types</label>
-                    <source_model>Inchoo\Stripe\Model\Source\Cctype</source_model>
+                    <source_model>Dotsquares\Mystripe\Model\Source\Cctype</source_model>
                 </field>
                 <field id="sort_order" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Sort Order</label>
