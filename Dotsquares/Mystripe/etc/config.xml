@@ -6,7 +6,7 @@
                 <active>0</active>
                 <model>Dotsquares\Mystripe\Model\Payment</model>
                 <payment_action>authorize_capture</payment_action>
-                <title>Paymetric Payment Method</title>
+                <title>Custom Payment Method</title>
 				<order_status>pending</order_status>
                 <!-- <api_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" /> -->
                 <cctypes>AE,VI,MC,DI,JCB</cctypes>
